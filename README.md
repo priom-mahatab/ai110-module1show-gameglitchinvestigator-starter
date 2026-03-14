@@ -25,14 +25,26 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- Describe the game's purpose.
+   - The game is a number-guessing challenge where players try to guess a randomly generated secret number within a difficulty-based range (Easy: 1-20, Normal: 1-100, Hard: 1-1000). Players get hints ("too high" or "too low") after each guess, earn points for winning (more for faster wins), and have limited attempts before the game ends. It's designed with intentional "glitches" to make it feel buggy and unpredictable, encouraging investigation and fixes.
+
+- Detail which bugs you found.
+   - **Hint messages were backwards:** "Too high" showed "Go HIGHER!" (should be "Go LOWER!"), and vice versa, with wrong emojis.
+   - **Win scoring was unfair:** Formula deducted too many points (e.g., 80 for a 1st-attempt win instead of 100).
+   - **Hard difficulty range was too small:** Set to 1-50 instead of a challenging 1-1000.
+   - **UI updates lagged:** Developer console and attempt count only updated after a second guess due to Streamlit's rerun order.
+   - **Difficulty changes didn't reset the game:** Switching mid-game kept the old secret, potentially out of the new range.
+   - **Attempts counter started wrong:** Began at 1, making "attempts left" display incorrectly.
+   - **Secret number seemed unstable:** Due to buggy string conversions on even attempts, causing comparison errors.
+- Explain what fixes you applied.
+   - **Fixed hints and scoring:** Corrected message text/emojis in check_guess and adjusted win formula to 100 - 10*(attempt_number - 1) for fair rewards.
+   - **Updated ranges:** - Changed Hard to 1-1000.
+   - **Improved UI Responsiveness:** - Moved st.info and debug display after submit logic so updates appear immediately.
+   - **Added auto-reset on difficulty change:** Detects changes and starts a new game automatically.
+   - **Fixed counters:** Set attempts to start at 0, updated info to use dynamic ranges.
+   - **Enhanced tests:** Added test_update_score_win and updated existing tests to unpack tuples.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+- ![winning_screenshot](image.png)
 
-## 🚀 Stretch Features
-
-- [ ] [If you choose to complete Challenge 4, insert a screenshot of your Enhanced Game UI here]
